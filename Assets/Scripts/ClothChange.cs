@@ -7,31 +7,29 @@ using UnityEngine;
 
 public class ClothChange : MonoBehaviour
 {
-    public GameObject summerStyle;
-    public GameObject winterStyle;
-    void Start()
+    public GameObject summer;
+    public GameObject winter;
+
+    private void OnEnable()
     {
-        App.Unidux
-            .Subject
+        App.Unidux.Subject
             .TakeUntilDisable(this)
             .StartWith(App.Unidux.State)
             .Subscribe(state =>
             {
-                switch (state.seasonState.season)
+                switch (state.clothState.cloth)
                 {
-                    case SeasonState.Season.Summer:
-                        summerStyle.SetActive(true);
-                        winterStyle.SetActive(false);
+                    case ClothState.Cloth.Summer:
+                        summer.SetActive(true);
+                        winter.SetActive(false);
                         break;
-                    case SeasonState.Season.Winter:
-                        winterStyle.SetActive(true);
-                        summerStyle.SetActive(false);
+                    case ClothState.Cloth.Winter:
+                        summer.SetActive(false);
+                        winter.SetActive(true);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-            })
-            .AddTo(this);
-
+            }).AddTo(this);
     }
 }
