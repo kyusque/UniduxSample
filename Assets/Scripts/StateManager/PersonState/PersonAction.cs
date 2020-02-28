@@ -12,7 +12,7 @@ namespace App
             ChangeToYuko,
         }
         
-        public class Action
+        public class Action: UniduxSample.IAction
         {
             public ActionType type;
         }
